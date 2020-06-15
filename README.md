@@ -61,6 +61,7 @@ end
 2. `BaklibApi::Models::Channel#destroy`
 4. `BaklibApi::Models::Channel#update`
 5. `BaklibApi::Models::Channel#articles`
+6. `BaklibApi::Models::Channel#create_article`
 
 创建栏目代码:
 
@@ -78,7 +79,6 @@ articles = channel.articles
 
 **可调用方法**
 
-1. `BaklibApi::Models::Article.list`
 3. `BaklibApi::Models::Article.create`
 2. `BaklibApi::Models::Article#destroy`
 4. `BaklibApi::Models::Article#update`

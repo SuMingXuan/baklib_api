@@ -7,6 +7,14 @@ module BaklibApi
           instance_variable_set("@#{attr.to_s}", options[attr])
         end
       end
+
+      def update(**options)
+        path = "/api/v1/#{self.class.base_name.pluralize}/#{id}"
+        attributes.delete_if { |k, v| k == :content }
+        response = Client.request(path, 'put', attributes.update(options))
+        self.class.new(response.dig("message").symbolize_keys)
+      end
+      
     end
   end
 end
