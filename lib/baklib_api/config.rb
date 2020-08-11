@@ -4,24 +4,16 @@ module BaklibApi
     # token是每个用户的唯一标识，且token为必填
     mattr_accessor :token
 
-    # 可访问的api接口
-    mattr_reader :expose_models
-    @@expose_models = [:tenant, :channel, :article]
+    # 每个站点的唯一标识，且client_id 为必填
+    mattr_accessor :client_id
+    mattr_reader :tenant_id
 
     mattr_reader :host
     @@host = 'https://www.baklib.com/'
 
-    mattr_reader :action_map
-    @@action_map = [
-      ['create', 'post'],
-      ['update', 'put'],
-      ['destroy', 'delete'],
-      ['show', 'get'],
-      ['list', 'get']
-    ]
-
     def self.setup
       yield self
+      @@tenant_id = client_id
     end
   end
 end

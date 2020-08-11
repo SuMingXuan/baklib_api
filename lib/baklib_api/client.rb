@@ -1,9 +1,7 @@
 module BaklibApi
   class Client
-    attr_reader :token, :host, :request
-    def initialize(token, host)
-      @token = token
-      @host = host
+    attr_reader :request
+    def initialize()
       @request = request
     end
 
@@ -11,8 +9,8 @@ module BaklibApi
       @client ||= Faraday.new(url: Config.host) do |conn|
         conn.headers['Authorization'] = "Bearer #{Config.token}"
         conn.headers['Content-Type'] = 'application/json'
-        conn.headers['User-Agent'] = 'Baklib API Client'
         conn.adapter :net_http
+        conn.params = {tenant_id: Config.client_id}
       end
     end
 
@@ -22,8 +20,9 @@ module BaklibApi
       else
         json = params.empty? ? nil : params.to_json
       end
-      client = Client.new(Config.token, Config.host)
+      client = Client.new
       response = client.request.send(request_method.downcase, path, json)
+      # TODO 根据错误码返回对应信息
       JSON.parse(response.body)
     end
   end
